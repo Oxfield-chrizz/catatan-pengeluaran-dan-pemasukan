@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>KeuanganKu - Pemasukan & Pengeluaran Terpisah</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <h1>💰 KeuanganKu</h1>
+            <p class="subtitle">Catat pemasukan & pengeluaran terpisah</p>
+        </header>
+
+        <!-- Saldo Section -->
+        <section class="balance-section">
+            <div class="balance-card">
+                <p class="balance-label">Total Saldo</p>
+                <p class="balance-amount" id="totalBalance">Rp 0</p>
+                <div class="balance-detail">
+                    <div class="income-badge">
+                        <span>📥 Total Pemasukan</span>
+                        <span id="totalIncome">Rp 0</span>
+                    </div>
+                    <div class="expense-badge">
+                        <span>📤 Total Pengeluaran</span>
+                        <span id="totalExpense">Rp 0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab Navigation -->
+        <div class="tab-container">
+            <button class="tab-btn active" data-tab="income-tab">
+                <span class="tab-icon">📥</span>
+                <span>Tambah Pemasukan</span>
+            </button>
+            <button class="tab-btn" data-tab="expense-tab">
+                <span class="tab-icon">📤</span>
+                <span>Tambah Pengeluaran</span>
+            </button>
+        </div>
+
+        <!-- Tab Content: Form Tambah Pemasukan -->
+        <div id="income-tab" class="tab-content active">
+            <section class="form-section income-form">
+                <h2>📥 Form Pemasukan</h2>
+                <form id="incomeForm">
+                    <div class="form-group">
+                        <label for="incomeDesc">Deskripsi Pemasukan</label>
+                        <input type="text" id="incomeDesc" placeholder="Contoh: Gaji, Bonus, Hadiah" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="incomeAmount">Jumlah (Rp)</label>
+                        <input type="number" id="incomeAmount" placeholder="0" min="0" step="1000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="incomeCategory">Kategori</label>
+                        <select id="incomeCategory">
+                            <option value="Gaji">💼 Gaji</option>
+                            <option value="Bonus">🎁 Bonus</option>
+                            <option value="Investasi">📈 Investasi</option>
+                            <option value="Hadiah">🎊 Hadiah</option>
+                            <option value="Lainnya">📝 Lainnya</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn income-submit">+ Tambah Pemasukan</button>
+                </form>
+            </section>
+        </div>
+
+        <!-- Tab Content: Form Tambah Pengeluaran -->
+        <div id="expense-tab" class="tab-content">
+            <section class="form-section expense-form">
+                <h2>📤 Form Pengeluaran</h2>
+                <form id="expenseForm">
+                    <div class="form-group">
+                        <label for="expenseDesc">Deskripsi Pengeluaran</label>
+                        <input type="text" id="expenseDesc" placeholder="Contoh: Makan, Transport, Belanja" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expenseAmount">Jumlah (Rp)</label>
+                        <input type="number" id="expenseAmount" placeholder="0" min="0" step="1000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expenseCategory">Kategori</label>
+                        <select id="expenseCategory">
+                            <option value="Makanan">🍽️ Makanan</option>
+                            <option value="Transportasi">🚗 Transportasi</option>
+                            <option value="Belanja">🛍️ Belanja</option>
+                            <option value="Tagihan">📄 Tagihan</option>
+                            <option value="Hiburan">🎬 Hiburan</option>
+                            <option value="Kesehatan">🏥 Kesehatan</option>
+                            <option value="Lainnya">📝 Lainnya</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn expense-submit">+ Tambah Pengeluaran</button>
+                </form>
+            </section>
+        </div>
+
+        <!-- Daftar Transaksi Section dengan Tab Terpisah -->
+        <section class="transactions-section">
+            <div class="section-header">
+                <h2>📋 Riwayat Transaksi</h2>
+                <button id="clearAllBtn" class="clear-btn">🗑️ Hapus Semua</button>
+            </div>
+            
+            <!-- Filter Tab untuk Daftar Transaksi -->
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-filter="all">📊 Semua</button>
+                <button class="filter-btn" data-filter="income">📥 Pemasukan</button>
+                <button class="filter-btn" data-filter="expense">📤 Pengeluaran</button>
+            </div>
+            
+            <div id="transactionsList" class="transactions-list">
+                <div class="empty-state">
+                    <p>✨ Belum ada transaksi</p>
+                    <p class="empty-sub">Tambahkan pemasukan atau pengeluaran</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistik Kategori -->
+        <section class="stats-section">
+            <h2>📊 Statistik Kategori</h2>
+            <div class="stats-container">
+                <div class="stats-card">
+                    <h3>📥 Pemasukan Terbanyak</h3>
+                    <div id="topIncomeCategory" class="stats-value">-</div>
+                </div>
+                <div class="stats-card">
+                    <h3>📤 Pengeluaran Terbanyak</h3>
+                    <div id="topExpenseCategory" class="stats-value">-</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>💡 Geser kiri pada transaksi untuk menghapus</p>
+            <p>📌 Data tersimpan otomatis di ponsel Anda</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
